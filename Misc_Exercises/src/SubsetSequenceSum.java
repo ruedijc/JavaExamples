@@ -44,4 +44,90 @@ public class SubsetSequenceSum {
         return false;
 
     }
+
+    private static boolean isValueInArrayAdvanced(int[] arr, int T) {
+
+        System.out.println("\nAdvanced Version");
+
+        //make a sum for each possible string
+        int[] sum = new int[arr.length];
+
+
+        if (arr[0] == T)  {
+            System.out.print(" < Found sum equal to T > " );
+            return true;
+        }
+        sum[0] = arr[0];
+
+        int[] lastval;
+        for (int i=1;i<arr.length;i++) {
+
+/*
+			1: 1
+			2: 2 / 2,1
+			3: 3 / 3,2 / 3,2,1
+			4: 4 / 4,3 / 4,3,2 / 4,3,2,1
+
+			i1: arr[i];
+			i2: arr[i] ; arr[i] + i1
+			i3: arr[i] ; arr[i] + i1 ; arr[i] + i2 + i1 ;
+
+*/
+
+
+
+            sum[i] = sum[i-1] + arr[i];
+            System.out.println(sum[i]);
+
+            if (sum[i] == T ) {
+                System.out.print(" < Found sum equal to T > " );
+                return true;
+            }
+
+        }
+
+        return false;
+    }
+
+
+    private static boolean isValueInArrayBasic(int[] arr, int T) {
+
+        System.out.println("Basic Version");
+
+        int sum = 0;
+        if (arr==null) return false;
+        if (arr.length ==0) return false;
+
+        int n = arr.length;
+        int iterations = 0;
+
+        sum = 0;
+        //loop over starting index
+        for (int i=0; i<(arr.length); i++ ) {
+
+            //loop from that point on to the rest of the array
+            for (int j=i; j<(arr.length); j++ ) {
+
+                System.out.print(j + ": " + arr[j] + ", ");
+                //System.out.print( arr[j] + ", " );
+                sum = sum + arr[j];
+                iterations++;
+                if (sum == T) {
+                    System.out.print(" < Found sum equal to T > " );
+                    //	return true;
+                }
+            }
+            System.out.print(" Sum = " + sum );
+            sum = 0;
+            System.out.println( "" );
+
+
+
+
+        }
+        System.out.println( "Iterations:"+ iterations + ", n=" + n  );
+
+        return false;
+    }
+
 }
